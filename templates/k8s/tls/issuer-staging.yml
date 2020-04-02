@@ -33,4 +33,14 @@ spec:
             tokenSecretRef:
               name: digitalocean-dns
               key: access-token
+          {{else if eq .DNSService "azuredns" }}
+          clinetId: "{{.ClientID}}"
+          clientSecretSecretRef:
+            name: azuredns-config
+            key: client-secret
+          subscriptionID: "{{.SubscriptionID}}"
+          tenantID: "{{.TenantID}}"
+          resourceGroupName: "{{.ResourceGroup}}"
+          hostedZoneName: "{{.DnsZone}}"
+          environment: AzurePubicCloud
           {{ end }}

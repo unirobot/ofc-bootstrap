@@ -40,6 +40,12 @@ func Test_filterDNSFeature(t *testing.T) {
 			expectedErr:     nil,
 		},
 		{
+			title:           "DNS Service provider is Azure DNS",
+			plan:            types.Plan{TLSConfig: types.TLSConfig{DNSService: "azuredns"}},
+			expectedFeature: types.AzureDNS,
+			expectedErr:     nil,
+		},
+		{
 			title:           "DNS Service provider is not supported",
 			plan:            types.Plan{TLSConfig: types.TLSConfig{DNSService: "unsupporteddns"}},
 			expectedFeature: "",

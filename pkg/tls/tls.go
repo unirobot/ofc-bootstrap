@@ -12,13 +12,18 @@ import (
 
 // TLSTemplate TLS configuration
 type TLSTemplate struct {
-	RootDomain  string
-	Email       string
-	DNSService  string
-	ProjectID   string
-	IssuerType  string
-	Region      string
-	AccessKeyID string
+	RootDomain     string
+	Email          string
+	DNSService     string
+	ProjectID      string
+	IssuerType     string
+	Region         string
+	AccessKeyID    string
+	ClientID       string
+	ResourceGroup  string
+	SubscriptionID string
+	TenantID       string
+	DnsZone        string
 }
 
 // Apply executes the plan
@@ -26,13 +31,18 @@ func Apply(plan types.Plan) error {
 
 	tlsTemplatesList, _ := listTLSTemplates()
 	tlsTemplate := TLSTemplate{
-		RootDomain:  plan.RootDomain,
-		Email:       plan.TLSConfig.Email,
-		DNSService:  plan.TLSConfig.DNSService,
-		ProjectID:   plan.TLSConfig.ProjectID,
-		IssuerType:  plan.TLSConfig.IssuerType,
-		Region:      plan.TLSConfig.Region,
-		AccessKeyID: plan.TLSConfig.AccessKeyID,
+		RootDomain:     plan.RootDomain,
+		Email:          plan.TLSConfig.Email,
+		DNSService:     plan.TLSConfig.DNSService,
+		ProjectID:      plan.TLSConfig.ProjectID,
+		IssuerType:     plan.TLSConfig.IssuerType,
+		Region:         plan.TLSConfig.Region,
+		AccessKeyID:    plan.TLSConfig.AccessKeyID,
+		ClientID:       plan.TLSConfig.ClientID,
+		SubscriptionID: plan.TLSConfig.SubscriptionID,
+		ResourceGroup:  plan.TLSConfig.ResourceGroup,
+		TenantID:       plan.TLSConfig.TenantID,
+		DnsZone:        plan.TLSConfig.DnsZone,
 	}
 
 	for _, template := range tlsTemplatesList {

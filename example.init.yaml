@@ -135,6 +135,16 @@ secrets:
     filters:
       - "cloudflare_dns01"
     namespace: "cert-manager"
+  
+  ## Use AzureDNS
+  ### Create role and download its secret access key
+  - name: "azuredns-client-secret"
+    files:
+      - name: "client-secret"
+        value_from: "~/Downloads/azuredns-client-secret-key"
+    filters:
+      - "azuredns_dns01"
+    namespace: "cert-manager"
 
   # Used by Buildkit to push images to your registry
   - name: "registry-secret"
@@ -306,6 +316,14 @@ tls_config:
 
   ### Cloudflare
   # dns_service: cloudflare
+  
+  ### AzureDNS
+  # dns_service: azuredns
+  # client_id: "client id"
+  # subscription_id: "subscription id"
+  # tenant_id: "tenant id"
+  # resource_group: "group name"
+  # dns_zone: "dns_zone"
 
 ## Dockerfile language support
 ### Use with caution, it allows any workload to be built and run

@@ -233,4 +233,69 @@ spec:
 	}
 }
 
+func Test_AzureDNS_Issuer(t *testing.T) {
+	tlsTemplate := TLSTemplate{
+		Email:          "sales@openfaas.com",
+		IssuerType:     "ClusterIssuer",
+		DNSService:     "azuredns",
+		ClientID:       "01234abc-de56-ff78-abc1-234567890def",
+		ResourceGroup:  "MyDnsResourceGroup",
+		SubscriptionID: "01234abc-de56-ff78-abc1-234567890def",
+		TenantID:       "01234abc-de56-ff78-abc1-234567890def",
+		DnsZone:        "example.com",
+	}
+
+	templatePath := "../../templates/k8s/tls/issuer-prod.yml"
+	templateData, err := ioutil.ReadFile(templatePath)
+	if err != nil {
+		t.Error(err)
+		return
+	}
+
+	templateRes := template.Must(template.New("prod-issuer").Parse(string(templateData)))
+	buf := bytes.Buffer{}
+	templateRes.Execute(&buf, &tlsTemplate)
+
+	wantTemplate := `apiVersion: cert-manager.io/v1alpha2
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt-prod
+  namespace: openfaas
+spec:
+  acme:
+    email: "sales@openfaas.com"
+    server: https://acme-v02.api.letsencrypt.org/directory
+    privateKeySecretRef:
+      name: letsencrypt-prod
+    solvers:
+    - dns01:
+        azuredns:
+          
+          clinetId: "01234abc-de56-ff78-abc1-234567890def"
+          clientSecretSecretRef:
+            name: azuredns-config
+            key: client-secret
+          subscriptionID: "01234abc-de56-ff78-abc1-234567890def"
+          tenantID: "01234abc-de56-ff78-abc1-234567890def"
+          resourceGroupName: "MyDnsResourceGroup"
+          hostedZoneName: "example.com"
+          environment: AzurePubicCloud
+          `
+
+	got := string(buf.Bytes())
+	if len(got) == 0 {
+		t.Errorf("No bytes generated from template")
+		t.Fail()
+	}
+
+	if debugYAML {
+		ioutil.WriteFile("want-"+tlsTemplate.DNSService+".yaml", []byte(wantTemplate), 0700)
+		ioutil.WriteFile("got-"+tlsTemplate.DNSService+".yaml", []byte(got), 0700)
+	}
+
+	if got != wantTemplate {
+		t.Errorf("Want\n`%q`\n, but got\n`%q`", wantTemplate, got)
+	}
+}
+
 var debugYAML bool

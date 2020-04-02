@@ -24,6 +24,8 @@ const (
 	Route53DNS = "route53_dns01"
 	// CloudflareDNS filter enables the creation of secrets for Cloudflare DNS when TLS is enabled
 	CloudflareDNS = "cloudflare_dns01"
+	// AzureDNS filter enables the creation of secrets for Azure DNS when TLS is enabled
+	AzureDNS = "azuredns_dns01"
 
 	// CloudDNS is the dns_service field in yaml file for Google Cloud Platform
 	CloudDNS = "clouddns"
@@ -33,6 +35,8 @@ const (
 	Route53 = "route53"
 	// Cloudflare for dns_service
 	Cloudflare = "cloudflare"
+	// Azure is the dns_service field in yaml file for Azure Platform
+	Azure = "azuredns"
 
 	// GitLabSCM repository manager name as displayed in the init.yaml file
 	GitLabSCM = "gitlab"
@@ -144,12 +148,17 @@ type S3 struct {
 }
 
 type TLSConfig struct {
-	Email       string `yaml:"email,omitempty"`
-	DNSService  string `yaml:"dns_service,omitempty"`
-	ProjectID   string `yaml:"project_id,omitempty"`
-	IssuerType  string `yaml:"issuer_type,omitempty"`
-	Region      string `yaml:"region,omitempty"`
-	AccessKeyID string `yaml:"access_key_id,omitempty"`
+	Email          string `yaml:"email,omitempty"`
+	DNSService     string `yaml:"dns_service,omitempty"`
+	ProjectID      string `yaml:"project_id,omitempty"`
+	IssuerType     string `yaml:"issuer_type,omitempty"`
+	Region         string `yaml:"region,omitempty"`
+	AccessKeyID    string `yaml:"access_key_id,omitempty"`
+	ClientID       string `yaml:"client_id,omitempty"`
+	SubscriptionID string `yaml:"subscription_id,omitempty"`
+	TenantID       string `yaml:"tenant_id,omitempty"`
+	ResourceGroup  string `yaml:"resource_group,omitempty"`
+	DnsZone        string `yaml:"dns_zone,omitempty"`
 }
 
 type ECRConfig struct {

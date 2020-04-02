@@ -777,6 +777,8 @@ func filterDNSFeature(plan types.Plan) (types.Plan, error) {
 		plan.Features = append(plan.Features, types.Route53DNS)
 	} else if plan.TLSConfig.DNSService == types.Cloudflare {
 		plan.Features = append(plan.Features, types.CloudflareDNS)
+	} else if plan.TLSConfig.DNSService == types.Azure {
+		plan.Features = append(plan.Features, types.AzureDNS)
 	} else {
 		return plan, fmt.Errorf("Error unavailable DNS service provider: %s", plan.TLSConfig.DNSService)
 	}
