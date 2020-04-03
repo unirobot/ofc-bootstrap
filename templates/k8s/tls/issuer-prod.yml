@@ -42,5 +42,5 @@ spec:
           tenantID: "{{.TenantID}}"
           resourceGroupName: "{{.ResourceGroup}}"
           hostedZoneName: "{{.DnsZone}}"
-          environment: AzurePubicCloud
+          environment: AzurePublicCloud
           {{ end }}

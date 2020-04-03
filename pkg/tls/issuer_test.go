@@ -279,7 +279,7 @@ spec:
           tenantID: "01234abc-de56-ff78-abc1-234567890def"
           resourceGroupName: "MyDnsResourceGroup"
           hostedZoneName: "example.com"
-          environment: AzurePubicCloud
+          environment: AzurePublicCloud
           `
 
 	got := string(buf.Bytes())
