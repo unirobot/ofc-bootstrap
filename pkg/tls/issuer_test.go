@@ -271,7 +271,7 @@ spec:
     - dns01:
         azuredns:
           
-          clinetID: "01234abc-de56-ff78-abc1-234567890def"
+          clientID: "01234abc-de56-ff78-abc1-234567890def"
           clientSecretSecretRef:
             name: azuredns-config
             key: client-secret

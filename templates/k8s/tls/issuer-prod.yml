@@ -34,7 +34,7 @@ spec:
               name: digitalocean-dns
               key: access-token
           {{else if eq .DNSService "azuredns" }}
-          clinetID: "{{.ClientID}}"
+          clientID: "{{.ClientID}}"
           clientSecretSecretRef:
             name: azuredns-config
             key: client-secret
