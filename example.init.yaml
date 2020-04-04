@@ -138,10 +138,10 @@ secrets:
   
   ## Use AzureDNS
   ### Create role and download its secret access key
-  - name: "azuredns-client-secret"
+  - name: "azuredns-config"
     files:
       - name: "client-secret"
-        value_from: "~/Downloads/azuredns-client-secret-key"
+        value_from: "~/Downloads/azuredns-config-secret-key"
     filters:
       - "azuredns_dns01"
     namespace: "cert-manager"
