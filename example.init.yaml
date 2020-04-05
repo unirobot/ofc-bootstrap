@@ -229,6 +229,8 @@ root_domain: "myfaas.club"
 ### Keep active if using a cluster with a LoadBalancer available.
 ingress: loadbalancer
 
+loadBalancerIP: ""
+
 ### Uncomment if using on-premises or a host/cloud without a loadbalancer
 # ingress: host
 

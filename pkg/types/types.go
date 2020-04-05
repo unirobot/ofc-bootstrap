@@ -64,6 +64,7 @@ type Plan struct {
 	TLSConfig            TLSConfig                `yaml:"tls_config,omitempty"`
 	Slack                Slack                    `yaml:"slack,omitempty"`
 	Ingress              string                   `yaml:"ingress,omitempty"`
+	LoadBalancerIP       string                   `yaml:"loadBalancerIP,omitempty"`
 	Deployment           Deployment               `yaml:"deployment,omitempty"`
 	EnableDockerfileLang bool                     `yaml:"enable_dockerfile_lang,omitempty"`
 	ScaleToZero          bool                     `yaml:"scale_to_zero,omitempty"`
