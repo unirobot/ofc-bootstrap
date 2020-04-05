@@ -288,7 +288,7 @@ func process(plan types.Plan, prefs InstallPreferences, additionalPaths []string
 		return err
 	}
 
-	installIngressErr := installIngressController(plan.Ingress, additionalPaths)
+	installIngressErr := installIngressController(plan.Ingress, plan.LoadBalancerIP, additionalPaths)
 	if installIngressErr != nil {
 		log.Println(installIngressErr.Error())
 		return installIngressErr
@@ -453,12 +453,14 @@ func createFunctionsAuth() error {
 	return nil
 }
 
-func installIngressController(ingress string, additionalPaths []string) error {
+func installIngressController(ingress string, loadBalancerIP string, additionalPaths []string) error {
 	log.Println("Creating Ingress Controller")
 
 	var env []string
 	if ingress == "host" {
 		env = append(env, "ADDITIONAL_SET=,controller.hostNetwork=true,controller.daemonset.useHostPort=true,dnsPolicy=ClusterFirstWithHostNet,controller.kind=DaemonSet")
+	} else if loadBalancerIP != "" {
+		env = append(env, "ADDITIONAL_SET=,controller.service.loadBalancerIP="+loadBalancerIP)
 	}
 
 	task := execute.ExecTask{
