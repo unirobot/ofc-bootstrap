@@ -18,3 +18,4 @@ credentials/
 /github.yaml
 /private-key
 CUSTOMERS
+init.yml
